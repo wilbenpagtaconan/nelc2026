@@ -1,0 +1,20 @@
+rules_version = '2';
+// Copy this into Firebase console → Firestore Database → Rules, put your staff emails in the list, then Publish.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isStaff() {
+      return request.auth != null
+        && request.auth.token.email in [
+          "organizer@example.com",
+          "scanner1@example.com",
+          "scanner2@example.com"
+        ];
+    }
+    match /events/{eventId} {
+      allow read, write: if isStaff();
+      match /people/{personId} {
+        allow read, write: if isStaff();
+      }
+    }
+  }
+}

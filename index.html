@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>National eLearning Conference 2026 · Check-in</title>
+<style>
+  :root{--fg:#111;--mut:#6b6b6b;--line:#e5e5e5;--bg:#fff;--soft:#f6f6f6;--ok:#1a7f37;--warn:#9a6700;--bad:#cf222e;--r:10px}
+  @media (prefers-color-scheme:dark){:root{--fg:#eee;--mut:#9a9a9a;--line:#2c2c2c;--bg:#121212;--soft:#1c1c1c;--ok:#3fb950;--warn:#d29922;--bad:#f85149}}
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  body{margin:0;font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--fg);background:var(--bg)}
+  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+  header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  h1{font-size:20px;margin:0;font-weight:600;outline:none}
+  h1:focus{border-bottom:1px dashed var(--mut)}
+  .stats{color:var(--mut);font-size:13px}
+  nav{display:flex;gap:4px;margin:18px 0 20px;border-bottom:1px solid var(--line)}
+  nav button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 12px;font:inherit;color:var(--mut);cursor:pointer;margin-bottom:-1px}
+  nav button.on{color:var(--fg);border-color:var(--fg)}
+  section{display:none}section.on{display:block}
+  label{display:block;font-size:13px;color:var(--mut);margin:0 0 4px}
+  input,select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg);color:var(--fg);font:inherit}
+  input:focus,select:focus{outline:none;border-color:var(--fg)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid .full{grid-column:1/-1}
+  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;border-radius:var(--r);border:1px solid var(--fg);background:var(--fg);color:var(--bg);font:inherit;cursor:pointer;white-space:nowrap}
+  .btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+  .btn.sm{padding:6px 10px;font-size:13px}
+  .btn.danger{color:var(--bad)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .card{border:1px solid var(--line);border-radius:var(--r);padding:16px}
+  .qrout{display:none;margin-top:20px;text-align:center}
+  .qrout canvas{max-width:420px;width:100%;aspect-ratio:29/15;height:auto;border:1px solid var(--line);border-radius:6px;background:#fff}
+  .size{font-size:12px;color:var(--mut);margin-top:6px}
+  #printArea{display:none}
+  @media print{
+    body>*:not(#printArea){display:none!important}
+    #printArea{display:block!important}
+    html,body{margin:0;background:#fff}
+    .pp{break-after:page;page-break-after:always;overflow:hidden}
+    .pp:last-child{break-after:auto;page-break-after:auto}
+    .pp img{width:2.9in;height:1.5in;display:block}
+    .slot{position:absolute;overflow:hidden}
+    .outline .slot{outline:0.5pt dashed #999;outline-offset:-0.25pt}
+    .tslot{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font:600 28pt system-ui,sans-serif;color:#999}
+  }
+  .sessbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;max-width:420px;margin:0 auto 12px}
+  .sessbar select{width:auto;flex:1;min-width:150px}
+  .sessnow{max-width:420px;margin:0 auto 12px;padding:10px 14px;border-radius:var(--r);background:var(--soft);display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .sessnow b{font-size:18px}
+  .sessnow.bad{background:transparent;border:1px solid var(--bad);color:var(--bad)}
+  .chips{display:flex;gap:4px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:11px;line-height:1;padding:6px 7px;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer;white-space:nowrap}
+  .chip.on{background:var(--ok);border-color:var(--ok);color:#fff}
+  .chip.cur{border-color:var(--fg)}
+  .chip:not(.on):hover{border-color:var(--fg);color:var(--fg)}
+  .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:14px}
+  .sbox{border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;cursor:pointer;background:transparent;color:var(--fg);font:inherit;text-align:left}
+  .sbox.cur{border-color:var(--fg)}
+  .sbox .k{font-size:12px;color:var(--mut)}
+  .sbox .v{font-size:20px;font-weight:600}
+  .sbox .v small{font-size:13px;color:var(--mut);font-weight:400}
+  .days{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:10px 0}
+  .seg{display:flex;max-width:420px;margin:0 auto 12px;border:1px solid var(--line);border-radius:var(--r);padding:3px;gap:3px}
+  .seg button{flex:1;border:0;background:transparent;color:var(--mut);font:inherit;font-size:14px;padding:8px;border-radius:7px;cursor:pointer}
+  .seg button.on{background:var(--fg);color:var(--bg)}
+  .wedge{max-width:420px;margin:0 auto;border:2px dashed var(--line);border-radius:var(--r);padding:18px;text-align:center}
+  .wedge.ready{border-color:var(--ok);border-style:solid}
+  .wedge input{text-align:center;font-size:16px;margin-top:10px}
+  .wedge .st{font-weight:600;font-size:16px}
+  .wedge.ready .st{color:var(--ok)}
+  .recent{max-width:420px;margin:14px auto 0}
+  .recent .rh{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+  .recent ol{list-style:none;margin:0;padding:0}
+  .recent li{display:flex;gap:10px;padding:7px 2px;border-bottom:1px solid var(--line);font-size:14px}
+  .recent li .t{color:var(--mut);min-width:64px}
+  .recent li.new{animation:fl 1.5s}
+  th.ck,td.ck{width:30px;padding-right:0}
+  input[type=checkbox]{width:18px;height:18px;accent-color:var(--fg);cursor:pointer;vertical-align:middle}
+  .selbar{position:sticky;bottom:12px;display:none;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg);box-shadow:0 4px 16px rgba(0,0,0,.08)}
+  .selbar.on{display:flex}
+  .opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);margin-bottom:8px;cursor:pointer;color:var(--fg);font-size:14px}
+  .opt input{margin-top:2px;width:16px;height:16px;flex:none}
+  .opt small{display:block;color:var(--mut)}
+  .prev{max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:var(--r);margin:10px 0}
+  .prev table{font-size:13px}.prev th,.prev td{padding:6px 8px}
+  .prev tr.skip td{color:var(--mut);text-decoration:line-through}
+  .drop{border:1px dashed var(--line);border-radius:var(--r);padding:16px;text-align:center}
+  .drop.over{border-color:var(--fg);background:var(--soft)}
+  .qrout .row{justify-content:center;margin-top:12px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+  th{font-weight:500;color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  td .sub{color:var(--mut);font-size:12px}
+  td.act{text-align:right;white-space:nowrap}
+  .pill{display:inline-block;white-space:nowrap;font-size:12px;padding:2px 8px;border-radius:99px;background:var(--soft);color:var(--mut)}
+  .pill.in{color:var(--ok)}
+  .empty{color:var(--mut);text-align:center;padding:30px 0}
+  .tools{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+  .tools input{flex:1;min-width:160px}
+  .scanner{position:relative;background:#000;border-radius:var(--r);overflow:hidden;aspect-ratio:1/1;max-width:420px;margin:0 auto}
+  .scanner video{width:100%;height:100%;object-fit:cover;display:block}
+  .scanner .frame{position:absolute;inset:18%;border:2px solid rgba(255,255,255,.85);border-radius:14px;box-shadow:0 0 0 999px rgba(0,0,0,.25);pointer-events:none}
+  .scanner .idle{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:14px;text-align:center;padding:20px}
+  .result{max-width:420px;margin:14px auto 0;padding:14px 16px;border-radius:var(--r);border:1px solid var(--line);min-height:62px}
+  .result b{display:block;font-size:17px}
+  .result.ok{border-color:var(--ok)}.result.ok b{color:var(--ok)}
+  .result.warn{border-color:var(--warn)}.result.warn b{color:var(--warn)}
+  .result.bad{border-color:var(--bad)}.result.bad b{color:var(--bad)}
+  .center{text-align:center}
+  .note{color:var(--mut);font-size:13px;margin-top:10px}
+  .flash{animation:fl .5s}
+  @keyframes fl{from{background:var(--soft)}to{background:transparent}}
+  dialog{border:1px solid var(--line);border-radius:var(--r);background:var(--bg);color:var(--fg);padding:20px;max-width:340px;width:90%}
+  dialog::backdrop{background:rgba(0,0,0,.4)}
+  .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:var(--r);font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+  .toast.on{opacity:1}
+  .store{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mut);margin-top:4px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--mut);flex:none}
+  .dot.ok{background:var(--ok)}.dot.warn{background:var(--warn)}.dot.bad{background:var(--bad)}
+  hr{border:0;border-top:1px solid var(--line);margin:24px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="eventName" contenteditable="true" spellcheck="false" title="Click to rename">National eLearning Conference 2026</h1>
+    <div class="stats" id="stats"></div>
+  </header>
+  <div class="store"><span class="dot" id="storeDot"></span><span id="storeText">Loading…</span></div>
+
+  <nav>
+    <button data-tab="register" class="on">Register</button>
+    <button data-tab="scan">Scan</button>
+    <button data-tab="list">Attendees</button>
+  </nav>
+
+  <!-- REGISTER -->
+  <section id="register" class="on">
+    <form id="regForm" class="grid" autocomplete="off">
+      <div class="full"><label for="fName">Full name *</label><input id="fName" required maxlength="80" placeholder="Juan Dela Cruz"></div>
+      <div><label for="fEmail">Email</label><input id="fEmail" type="email" maxlength="100" placeholder="juan@example.com"></div>
+      <div><label for="fOrg">Organization</label><input id="fOrg" maxlength="80" placeholder="Company / School"></div>
+      <div class="full row"><button class="btn" type="submit">Register &amp; generate QR</button></div>
+    </form>
+
+    <div class="qrout card" id="qrOut">
+      <canvas id="qrCanvas"></canvas>
+      <div class="size">Sticker size: 2.9 in × 1.5 in</div>
+      <div class="row">
+        <button class="btn" id="dlQR" type="button">Download PNG</button>
+        <button class="btn ghost" id="printQR" type="button">Print</button>
+        <button class="btn ghost" id="newReg" type="button">New registration</button>
+      </div>
+    </div>
+
+    <hr>
+    <div style="font-weight:600;margin-bottom:6px">Bulk upload</div>
+    <div class="drop" id="drop">
+      <div class="row" style="justify-content:center">
+        <label class="btn ghost" style="margin:0;color:var(--fg);font-size:15px">Choose CSV or Excel file<input id="bulkIn" type="file" accept=".csv,.xlsx,.xls,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden></label>
+        <button class="btn ghost" id="tplBtn" type="button">Download template</button>
+      </div>
+      <div class="note">or drop the file here · columns: <b>Name</b> (or First name + Last name), <b>Email</b>, <b>Organization</b></div>
+    </div>
+  </section>
+
+  <!-- SCAN -->
+  <section id="scan">
+    <div class="sessbar">
+      <label for="sessSel" style="margin:0">Session</label>
+      <select id="sessSel"></select>
+    </div>
+    <div class="sessnow" id="sessNow"></div>
+    <div class="seg" id="scanModes">
+      <button type="button" data-mode="camera" class="on">Camera</button>
+      <button type="button" data-mode="wedge">Bluetooth / USB scanner</button>
+    </div>
+    <div class="wedge" id="wedgeBox" hidden>
+      <div class="st" id="wedgeSt">Click here to activate</div>
+      <div class="note" style="margin:4px 0 0">Scan badges with a phone paired as a Bluetooth scanner, or a USB / Bluetooth QR scanner. Keep this window in front.</div>
+      <input id="wedgeIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Scanned codes appear here">
+    </div>
+    <div id="camBox">
+    <div class="scanner" id="scanner">
+      <video id="video" playsinline muted></video>
+      <div class="frame" id="frame" hidden></div>
+      <div class="idle" id="idle">Camera is off</div>
+    </div>
+    <div class="row" style="justify-content:center;margin-top:14px">
+      <button class="btn" id="camBtn" type="button">Start camera</button>
+      <select id="camSel" style="width:auto;display:none"></select>
+      <label class="btn ghost" style="margin:0;color:var(--fg);font-size:15px">Scan photo<input id="photoIn" type="file" accept="image/*" capture="environment" hidden></label>
+    </div>
+    </div>
+    <div class="result" id="result"><span class="sub" style="color:var(--mut)">Point the camera at an attendee's QR code.</span></div>
+    <p class="note center" id="camNote"></p>
+    <div class="recent" id="recent"></div>
+    <hr>
+    <form id="manualForm" class="row" style="max-width:420px;margin:0 auto">
+      <input id="manualIn" placeholder="Manual check-in: name or ID" style="flex:1">
+      <button class="btn ghost" type="submit">Check in</button>
+    </form>
+  </section>
+
+  <!-- LIST -->
+  <section id="list">
+    <div class="sgrid" id="sessStats"></div>
+    <div class="tools">
+      <input id="search" placeholder="Search name, email, org, ID">
+      <select id="filter" style="width:auto"></select>
+    </div>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th class="ck"><input type="checkbox" id="selAll" title="Select all shown"></th><th>Attendee</th><th>Attendance <span style="text-transform:none;letter-spacing:0">(click to change)</span></th><th></th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table></div>
+    <div class="selbar" id="selBar">
+      <b id="selCount"></b>
+      <span style="flex:1"></span>
+      <button class="btn sm" id="selPrint">Print QR badges</button>
+      <button class="btn ghost sm" id="selClear">Clear</button>
+    </div>
+    <hr>
+    <div class="row">
+      <button class="btn ghost sm" id="csvBtn">Export CSV</button>
+      <button class="btn ghost sm" id="backupBtn">Backup (JSON)</button>
+      <label class="btn ghost sm" style="margin:0;color:var(--fg)">Restore / merge<input id="restoreIn" type="file" accept=".json,application/json" hidden></label>
+      <span style="flex:1"></span>
+      <select id="resetSel" style="width:auto;padding:6px 10px;font-size:13px"></select>
+      <button class="btn ghost sm danger" id="resetIn">Reset check-ins</button>
+      <button class="btn ghost sm danger" id="wipe">Delete all</button>
+    </div>
+    <hr>
+    <div class="card" id="daysCard">
+      <div style="font-weight:600;margin-bottom:4px">Event days &amp; sessions</div>
+      <div class="note" style="margin:0">Each day has an AM and a PM session. When the scanner is on <b>Auto</b>, it uses today's date and the cutoff time to pick the session.</div>
+      <div class="row" style="margin-top:12px">
+        <div><label for="dayCount">Number of days</label><select id="dayCount" style="width:auto"></select></div>
+        <div><label for="cutoff">PM starts at</label><input id="cutoff" type="time" style="width:auto"></div>
+      </div>
+      <div class="days" id="dayDates"></div>
+      <button class="btn sm" id="saveDays">Save event days</button>
+    </div>
+    <hr>
+    <div class="card" id="storeCard">
+      <div style="font-weight:600;margin-bottom:4px">Data storage</div>
+      <div class="note" id="storeInfo" style="margin:0 0 12px"></div>
+      <div class="row" id="fileBtns" hidden>
+        <button class="btn sm" id="openFile">Open JSON file…</button>
+        <button class="btn ghost sm" id="newFile">Create new JSON file…</button>
+        <button class="btn ghost sm" id="reconnect" hidden></button>
+        <button class="btn ghost sm" id="unlink" hidden>Unlink</button>
+      </div>
+      <div class="row" id="cloudBtns" hidden>
+        <button class="btn ghost sm" id="signOutBtn">Sign out</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<dialog id="dlg">
+  <p id="dlgMsg" style="margin-top:0"></p>
+  <div class="row" style="justify-content:flex-end">
+    <button class="btn ghost" id="dlgNo">Cancel</button>
+    <button class="btn" id="dlgYes">OK</button>
+  </div>
+</dialog>
+<dialog id="qrDlg" style="text-align:center;max-width:460px">
+  <canvas id="qrDlgCanvas" style="width:100%;aspect-ratio:29/15;background:#fff;border:1px solid var(--line);border-radius:6px"></canvas>
+  <div class="size">2.9 in × 1.5 in</div>
+  <div class="row" style="justify-content:center;margin-top:12px">
+    <button class="btn" id="qrDlgDl">Download</button>
+    <button class="btn ghost" id="qrDlgPrint">Print</button>
+    <button class="btn ghost" id="qrDlgClose">Close</button>
+  </div>
+</dialog>
+<dialog id="impDlg" style="max-width:640px">
+  <div style="font-weight:600" id="impTitle">Import registrants</div>
+  <div class="note" id="impSummary" style="margin:4px 0 0"></div>
+  <div class="prev"><table><thead><tr><th>Name</th><th>Email</th><th>Organization</th><th></th></tr></thead><tbody id="impBody"></tbody></table></div>
+  <label class="opt" style="margin:0 0 12px"><input type="checkbox" id="impPrint" checked><span>Select the imported people for printing afterwards<small>They will be ticked in the Attendees list so you can print their badges at once.</small></span></label>
+  <div class="row" style="justify-content:flex-end">
+    <button class="btn ghost" id="impCancel">Cancel</button>
+    <button class="btn" id="impGo">Import</button>
+  </div>
+</dialog>
+
+<dialog id="prDlg" style="max-width:460px">
+  <div style="font-weight:600;margin-bottom:10px" id="prTitle">Print QR badges</div>
+  <label class="opt"><input type="radio" name="paper" value="sheet" checked><span>A4 sticker sheet — 14 per page<small>2 columns × 7 rows of 2.9 × 1.5 in precut stickers. The 1st badge always goes on the top-left sticker.</small></span></label>
+  <label class="opt"><input type="radio" name="paper" value="label"><span>Single sticker — 2.9 × 1.5 in<small>One badge per page (label printer)</small></span></label>
+  <div id="sheetOpts" style="margin:6px 0 4px">
+    <div class="note" style="margin:0 0 8px">Sticker position on the A4 sheet (inches) — measure your sticker paper:</div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:8px">
+      <div><label for="sh_top">Top edge → 1st sticker</label><input id="sh_top" type="number" step="0.01" min="0"></div>
+      <div><label for="sh_left">Left edge → 1st sticker</label><input id="sh_left" type="number" step="0.01" min="0"></div>
+      <div><label for="sh_gapX">Gap between columns</label><input id="sh_gapX" type="number" step="0.01" min="0"></div>
+      <div><label for="sh_gapY">Gap between rows</label><input id="sh_gapY" type="number" step="0.01" min="0"></div>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn ghost sm" id="shTest" type="button">Print alignment test</button>
+      <button class="btn ghost sm" id="shCenter" type="button">Center on page</button>
+      <button class="btn ghost sm" id="shReset" type="button">Defaults</button>
+    </div>
+    <label class="opt" style="border:0;padding:8px 2px 0;margin:0"><input type="checkbox" id="prCut"><span>Draw sticker outlines<small>For printing on plain paper to cut by hand — leave off for precut stickers.</small></span></label>
+  </div>
+  <div class="note" id="prInfo" style="margin:8px 0 12px"></div>
+  <div class="row" style="justify-content:flex-end">
+    <button class="btn ghost" id="prCancel">Cancel</button>
+    <button class="btn" id="prGo">Print</button>
+  </div>
+</dialog>
+<style id="pageStyle">@page{size:A4 portrait;margin:0}</style>
+
+<dialog id="authDlg" style="max-width:380px">
+  <form id="authForm">
+    <div style="font-weight:600;font-size:17px">Staff sign-in</div>
+    <div class="note" style="margin:4px 0 14px">The attendance list is shared live in the cloud. Sign in with the staff account the organizer gave you.</div>
+    <label for="authEmail">Email</label>
+    <input id="authEmail" type="email" autocomplete="username" required style="margin-bottom:10px">
+    <label for="authPw">Password</label>
+    <input id="authPw" type="password" autocomplete="current-password" required>
+    <div class="note" id="authErr" style="color:var(--bad);min-height:18px;margin:8px 0"></div>
+    <button class="btn" type="submit" id="authGo" style="width:100%">Sign in</button>
+  </form>
+</dialog>
+<div class="toast" id="toast"></div>
+<div id="printArea"></div>
+
+<script src="lib/qrcode.js"></script>
+<script src="lib/jsQR.js"></script>
+<script src="core.js"></script>
+<script src="firebase-config.js"></script>
+<script src="cloud.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
